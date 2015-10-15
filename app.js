@@ -33,4 +33,5 @@ var  renderBoard = function() {
   playerClass[1].setAttribute('class','playerOne');
 };
 
+
 renderBoard();

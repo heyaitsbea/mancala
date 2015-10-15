@@ -1,6 +1,7 @@
 body {
   font-family: sans-serif;
   text-align: center;
+  overflow: hidden;
 }
 
 h1 {
@@ -12,6 +13,14 @@ h1 {
   height: 200px;
   border: 2px solid #000000;
   border-radius: 50px;
+  float: left;
+  width: 100px;
+  margin: 0 auto;
+}
+
+.container {
+  width: 800px;
+  margin: 0 auto;
 }
 
 .playerOneBank {
@@ -19,6 +28,9 @@ h1 {
   height: 200px;
   border: 2px solid #000000;
   border-radius: 50px;
+  float: right;
+  width: 100px;
+  margin: 0 auto;
 }
 
 button {
