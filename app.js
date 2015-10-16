@@ -80,13 +80,13 @@ var getStones = function(){
 };
 
 
-var sowStones = function(amtStones){
-  if (amtStones === 0){
-    alert('invalid selection');
-  } else {
-
-  }
-}
+// var sowStones = function(amtStones){
+//   if (amtStones === 0){
+//     alert('invalid selection');
+//   } else {
+//
+//   }
+// }
 
 //change to do not sow sow stone to banks
 
