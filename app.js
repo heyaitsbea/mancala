@@ -84,7 +84,7 @@ var sowStones = function(amtStones){
   if (amtStones === 0){
     alert('invalid selection');
   } else {
-    
+
   }
 }
 
