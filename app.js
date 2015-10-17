@@ -56,7 +56,4 @@ function moveStones(pitIndex){
 renderBoard();
 
 
-//using pitIndex to movestones ====== works!!!!!
-
-
 ///player must defined before game starts
