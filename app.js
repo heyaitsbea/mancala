@@ -31,16 +31,6 @@ function renderBoard() {
   playerClass[1].setAttribute('class','playerOne');
 };
 
-function setPlayer(){
-  if(currentPlayer = 1){
-    currentPlayer = 0;
-    return currentPlayer;
-  } else {
-    currentPlayer = 1;
-    return currentPlayer;
-  }
-};
-
 function moveStones(pitIndex){
   var stonesInHand = gameBoard[pitIndex];
   var pitNextIndex = pitIndex + 1;
@@ -60,6 +50,15 @@ function moveStones(pitIndex){
   };
 };
 
+function eatStones(){
+  var inverse = gameBoard.length - lastIndex;
+  if(gameBoard[lastIndex] === 1){
+    //check inverse pit
+    gameBoard[inverse]
+    //move to bank
+  }
+};
+
 function checkWin(){
   var playerOneStones = gameBoard[1]+gameBoard[2]+gameBoard[3]+gameBoard[4]+gameBoard[5]+gameBoard[6];
   var playerTwoStones = gameBoard[8]+gameBoard[9]+gameBoard[10]+gameBoard[11]+gameBoard[12]+gameBoard[13];
@@ -77,6 +76,18 @@ function checkWin(){
   };
 };
 
+
+//set current player
+function setPlayer(){
+  if(currentPlayer = 1){
+    currentPlayer = 0;
+    return currentPlayer;
+  } else {
+    currentPlayer = 1;
+    return currentPlayer;
+  }
+};
+
 var updateBoard = function (gameObject){
   gameBoard[gameObject.pits] = gameObject.value;
   var element = document.getElementById(gameObject.pits);
@@ -88,7 +99,7 @@ var updateBoard = function (gameObject){
 
 var setListeners = function(){
 
-  for( var i = 0; i < pit.length; i++){
+  for( var i = 0; i < gameBoard.length; i++){
     var pit = document.querySelectorAll('button');
     pit.addEventListener('click', function(eventObject){
       var gameObject = {'pits': eventObject.target.id, 'value': 'test'}
