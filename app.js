@@ -1,5 +1,5 @@
 //global board with starting values in array
-var gameBoard = [0,1,2,3,4,5,6,7,8,9,10,11,12,13];
+var gameBoard = [0,4,4,4,4,4,4,0,4,4,4,4,4,4];
 
 //set turn as 0
 var turn = 0;
@@ -38,37 +38,25 @@ var  renderBoard = function() {
   playerClass[1].setAttribute('class','playerOne');
 };
 
-var sowStones = function(amtStones,pitIndex){
-  if (amtStones === 0){
-    alert('invalid selection');
-  } else {
-    gameBoard.splice(pit, 1, 0);
-    for(i = 0; i < amtStones; i++){
-      gameBoard.splice(pit+1, 1, gameBoard[pit]+1);
-    }
-    return gameBoard;
-  };
-};
-
-renderBoard();
-sowStones();
-
-
-//using pitIndex to movestones ==== needs fixing
-var board = [0,1,2,3,4,5,6,7,8]
 function moveStones(pitIndex){
-  var stonesInHand = board[pitIndex];
-  board[pitIndex] = 0;
+  var stonesInHand = gameBoard[pitIndex];
+  var pitNextIndex = pitIndex + 1;
+  gameBoard[pitIndex] = 0;
   var i;
   if(stonesInHand > 0){
-    for(i = pitIndex + 1; i < board.length; i++){
-      board[pitIndex] += 1;
+    for(i = pitNextIndex; i < stonesInHand + pitNextIndex; i++){
+      gameBoard[i % gameBoard.length] += 1;
     }
-    return board;
+    return gameBoard;
   } else {
     alert('error');
   }
-}
+};
+
+renderBoard();
+
+
+//using pitIndex to movestones ====== works!!!!!
 
 
 ///player must defined before game starts
