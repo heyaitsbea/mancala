@@ -8,26 +8,22 @@ h1 {
 }
 
 div {
-  display: inline-block;
+  display: block;
 }
 
-.game {
-  overflow: hidden;
+.container {
+  width: 880px;
+  margin: 0 auto;
   background-color: #DEB887;
   border: 2px solid #8B7355;
   border-radius: 20px;
   padding: 20px;
 }
 
-.container {
-  width: 1000px;
-  margin: 0 auto;
-  overflow: hidden;
-}
-
-.playerOne button {
+.playerTwo button {
   float:right;
 }
+
 button {
   width: 100px;
   height: 100px;
@@ -41,12 +37,12 @@ button {
 
 button#pit0 {
   width: 100px;
-  height: 200px;
-  float:left;
+  height: 210px;
+  float: right;
 }
 
 button#pit7 {
   width: 100px;
-  height: 200px;
-  float:right;
+  height: 210px;
+  float: left;
 }
