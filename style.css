@@ -1,5 +1,7 @@
 body {
-  font-family: sans-serif;
+  font-family: "Verdana", sans-serif;
+  font-size: 20pt;
+  color: #5F9EA0;
   text-align: center;
 }
 
@@ -45,4 +47,14 @@ button#pit7 {
   width: 100px;
   height: 210px;
   float: left;
+}
+
+.info {
+  width: 880px;
+  height: 80px;
+  margin: 50px auto;
+  line-height: 80px;
+  text-align: center;
+  border: 2px dotted #5F9EA0;
+  border-radius: 20px;
 }

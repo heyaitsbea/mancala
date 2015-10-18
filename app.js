@@ -4,8 +4,11 @@ var gameBoard = [
   0,4,4,4,4,4,4
 ];
 
-//set turn as 0
+//set currentPlayer as 1
 var currentPlayer = 1;
+
+//game play readout
+var readOut = document.querySelector('div.info');
 
 //render board
 function renderBoard() {
@@ -39,24 +42,33 @@ function moveStones(pitIndex){
   if(stonesInHand > 0) {
     for(i = pitNextIndex; i < stonesInHand + pitNextIndex; i++){
       //will start at the first item when it reaches the end
-      var lastIndex = i % gameBoard.length;
+      lastIndex = i % gameBoard.length;
       gameBoard[lastIndex] += 1;
     }
-
     return gameBoard;
-
+    //call bankStones
+    bankStones();
   } else {
     alert('error');
   };
 };
 
-function eatStones(){
+function bankStones(){
   var inverse = gameBoard.length - lastIndex;
-  if(gameBoard[lastIndex] === 1){
-    //check inverse pit
-    gameBoard[inverse]
-    //move to bank
-  }
+  //if lastIndex is not a bank
+  if(lastIndex != 0 || 7) {
+    if(currentPlayer === 1) {
+      if(gameBoard[lastIndex] === 1){
+        //move all stones in inverse pit to player 2 bank
+        gameBoard[7] += gameBoard[inverse] + 1;
+        gameBoard[lastIndex] = 0;
+        return gameBoard;
+      };
+    } else {
+      gameBoard[0] += gameBoard[inverse] + 1;
+      gameBoard[lastIndex] = 0;
+    };
+  };
 };
 
 function checkWin(){
@@ -67,12 +79,13 @@ function checkWin(){
     var playerTwoTotal = playerTwoStones + gameBoard[7];
 
     if(playerOneTotal > playerTwoTotal){
-      alert('Player One Wins!');
+      readOut.textContent = 'Player One Wins!';
     } else {
-      alert('Player Two Wins!');
-    }
+      readOut.textContent = 'Player Two Wins!';
+    };
   } else {
-    console.log('keep playing');
+    //if there is no winner then player is changed
+    setPlayer();
   };
 };
 
@@ -102,7 +115,7 @@ var setListeners = function(){
   for( var i = 0; i < gameBoard.length; i++){
     var pit = document.querySelectorAll('button');
     pit.addEventListener('click', function(eventObject){
-      var gameObject = {'pits': eventObject.target.id, 'value': 'test'}
+      var gameObject = {'pits': eventObject.target.id, 'value': gameBoard}
 
       updateBoard(gameObject);
     });
@@ -111,38 +124,6 @@ var setListeners = function(){
 
 renderBoard();
 setListeners();
-
-// function bankStones(){
-//   if(lastIndex === 0 || 7){
-//     currentPlayer
-//   } else if (gameBoard[lastIndex] === 1) {
-//     gameBoard[]
-//   }
-// }
-//
-// var getCurrentPlayer = function(){
-//   if(currentPlayer === 1){
-//     currentPlayer = 0;
-//     return currentPlayer;
-//   } else {
-//     currentPlayer = 1;
-//     return currentPlayer;
-//   }
-// };
-//
-// var setListeners = function(){
-//   for(var i = 0; i < gameBoard.length; i++){
-//     var element = document.getElementById(i);
-//     element.addEventListener("click", function(eventObject){
-//     //let's figure out who's turn it is so we can lay down a x or o
-//     var currentPlayer = getCurrentPlayer();
-//     var gameObject = { "pos": eventObject.target.id, "value": turn}
-//     updateGame(gameObject);
-//     });
-//   }
-// };
-//
-//
 
 //disable click event for pits
 // var bankPlayerOne = document.getElementById('pit0');
