@@ -5,7 +5,7 @@ var gameBoard = [
 ];
 
 //set currentPlayer as 1
-var currentPlayer = 1;
+var currentPlayer = 0;
 
 //game play readout
 var readOut = document.querySelector('div.info');
@@ -32,6 +32,16 @@ function renderBoard() {
   var playerClass = document.querySelectorAll('.container div');
   playerClass[0].setAttribute('class','playerTwo');
   playerClass[1].setAttribute('class','playerOne');
+
+  setListeners();
+};
+
+var setListeners = function(){
+  for(var i = 0; i < gameBoard.length; i++){
+    var pit = document.querySelectorAll('button');
+    pit[i].addEventListener('click', function(eventObject){moveStones(eventObject)});
+
+  };
 };
 
 function moveStones(pitIndex){
@@ -48,8 +58,6 @@ function moveStones(pitIndex){
     return gameBoard;
     //call bankStones
     bankStones();
-  } else {
-    alert('error');
   };
 };
 
@@ -62,12 +70,22 @@ function bankStones(){
         //move all stones in inverse pit to player 2 bank
         gameBoard[7] += gameBoard[inverse] + 1;
         gameBoard[lastIndex] = 0;
+
         return gameBoard;
+
+        updateBoard();
       };
     } else {
       gameBoard[0] += gameBoard[inverse] + 1;
       gameBoard[lastIndex] = 0;
+
+      return gameBoard;
+
+      updateBoard();
     };
+  } else {
+
+    updateBoard();
   };
 };
 
@@ -89,41 +107,28 @@ function checkWin(){
   };
 };
 
-
 //set current player
 function setPlayer(){
-  if(currentPlayer = 1){
-    currentPlayer = 0;
+  if(currentPlayer = 0){
+    currentPlayer = 1;
     return currentPlayer;
   } else {
-    currentPlayer = 1;
+    currentPlayer = 0;
     return currentPlayer;
   }
 };
 
-var updateBoard = function (gameObject){
-  gameBoard[gameObject.pits] = gameObject.value;
-  var element = document.getElementById(gameObject.pits);
-  element.innerHTML = gameObject.value;
+var updateBoard = function (){
+  for(var i = 0; i < gameBoard.length; i++){
+    var pit = document.querySelectorAll('button');
+    pit[i].textContent = gameBoard[i];
+  };
 
   checkWin();
 };
 
 
-var setListeners = function(){
-
-  for( var i = 0; i < gameBoard.length; i++){
-    var pit = document.querySelectorAll('button');
-    pit.addEventListener('click', function(eventObject){
-      var gameObject = {'pits': eventObject.target.id, 'value': gameBoard}
-
-      updateBoard(gameObject);
-    });
-  }
-};
-
 renderBoard();
-setListeners();
 
 //disable click event for pits
 // var bankPlayerOne = document.getElementById('pit0');
