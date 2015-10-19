@@ -24,6 +24,7 @@ function renderBoard() {
     //add buttons to each row
     var button = document.createElement('button');
     button.setAttribute('id', 'pit'+i);
+    button.setAttribute('value',i);
     //assign initial values to each button
     button.innerHTML = gameBoard[i];
     row.appendChild(button);
@@ -32,16 +33,6 @@ function renderBoard() {
   var playerClass = document.querySelectorAll('.container div');
   playerClass[0].setAttribute('class','playerTwo');
   playerClass[1].setAttribute('class','playerOne');
-
-  setListeners();
-};
-
-var setListeners = function(){
-  for(var i = 0; i < gameBoard.length; i++){
-    var pit = document.querySelectorAll('button');
-    pit[i].addEventListener('click', function(eventObject){moveStones(eventObject)});
-
-  };
 };
 
 function moveStones(pitIndex){
@@ -58,33 +49,31 @@ function moveStones(pitIndex){
     return gameBoard;
     //call bankStones
     bankStones();
+  } else {
+    info.textContent = 'You must select a pit with stones';
   };
 };
 
 function bankStones(){
   var inverse = gameBoard.length - lastIndex;
   //if lastIndex is not a bank
-  if(lastIndex != 0 || 7) {
-    if(currentPlayer === 1) {
-      if(gameBoard[lastIndex] === 1){
-        //move all stones in inverse pit to player 2 bank
-        gameBoard[7] += gameBoard[inverse] + 1;
-        gameBoard[lastIndex] = 0;
+  if((lastIndex != 0 || 7) && (gameBoard[lastIndex] === 1)) {
+    if(currentPlayer === 1){
+      //move all stones in inverse pit to player 2 bank
+      gameBoard[7] += gameBoard[inverse] + 1;
+      gameBoard[lastIndex] = 0;
 
-        return gameBoard;
-
-        updateBoard();
-      };
+      return gameBoard;
+      updateBoard();
     } else {
       gameBoard[0] += gameBoard[inverse] + 1;
       gameBoard[lastIndex] = 0;
 
       return gameBoard;
-
       updateBoard();
     };
   } else {
-
+    return gameBoard;
     updateBoard();
   };
 };
@@ -127,9 +116,32 @@ var updateBoard = function (){
   checkWin();
 };
 
+var setListeners = function(){
+  for(var i = 0; i < gameBoard.length; i++){
+    var pit = document.querySelectorAll('button');
+    pit[i].addEventListener('click', function(eventObject){moveStones(eventObject.target.value)})
+  };
+};
 
 renderBoard();
 
+window.onload = function() {
+  console.log("The world, like this file, is your oyster.");
+
+  document.getElementById('pit1').addEventListener('click', moveStones(1));
+  document.getElementById('pit2').addEventListener('click', moveStones(2));
+  document.getElementById('pit3').addEventListener('click', moveStones(3));
+  document.getElementById('pit4').addEventListener('click', moveStones(4));
+  document.getElementById('pit5').addEventListener('click', moveStones(5));
+  document.getElementById('pit6').addEventListener('click', moveStones(6));
+  document.getElementById('pit8').addEventListener('click', moveStones(8));
+  document.getElementById('pit9').addEventListener('click', moveStones(9));
+  document.getElementById('pit10').addEventListener('click', moveStones(10));
+  document.getElementById('pit11').addEventListener('click', moveStones(11));
+  document.getElementById('pit12').addEventListener('click', moveStones(12));
+  document.getElementById('pit13').addEventListener('click', moveStones(13));
+
+};
 //disable click event for pits
 // var bankPlayerOne = document.getElementById('pit0');
 // bankPlayerOne.removeEventListener('click', false);
