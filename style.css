@@ -37,13 +37,13 @@ button {
   box-shadow: 2px 2px 20px 5px #8B7355 inset;
 }
 
-button#pit0 {
+button.pit0 {
   width: 100px;
   height: 210px;
   float: right;
 }
 
-button#pit7 {
+button.pit7 {
   width: 100px;
   height: 210px;
   float: left;
