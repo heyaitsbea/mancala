@@ -140,7 +140,15 @@ function setPlayer(){ // set the player
   if(currentPlayer === 'one'){ // switch the string holding the current player
     currentPlayer = 'two';
     readOut.textContent = 'It is player '+currentPlayer+'\'s turn'; // text to print
+    var deselectBtn = document.getElementById(highlighted);
+    
+    deselectBtn.style.backgroundColor = "#DEB887"; // oG color
+    deselectBtn.style.border = "#8B7355";
+
+    var selectBtn = document.getElementById("1");
+    
     // go to AI function
+
 
     return currentPlayer;  
   } else {
@@ -166,8 +174,6 @@ function moveStones2(e) { // when key is pressed,, call this
     // send current value of the pitIndex somehow
   } else if (keyCode == 32) { // go through options
     
-
-   
     var prevHighlighted = highlighted; // keep in here
 
     console.log("at the start, highlighted is " + highlighted);
@@ -194,7 +200,6 @@ function moveStones2(e) { // when key is pressed,, call this
     selectedSpot.style.border = "#aaa9ad";
     
 
-
    
   }
 }
@@ -203,19 +208,12 @@ var setListeners = function(){   // only sets at the beginning
   // 
   document.addEventListener("keydown", moveStones2, false);
 
- 
-
-
   for(var i = 0; i < gameBoard.length; i++){  //setting a listener for each pit
     var pit = document.querySelectorAll('button'); // select all the stones to be listening for a click
 
     pit[1].style.backgroundColor =  "#abebb4";
     pit[1].style.border =  "#aaa9ad";
     highlighted = 1;
-    
-  
-    // pit[i].addEventListener('keydown', funct)
-   
 
     pit[i].addEventListener('click', function(eventObject){moveStones(Number(eventObject.target.id))} );
     // moves stones when te button 
