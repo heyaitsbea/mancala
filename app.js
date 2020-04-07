@@ -4,6 +4,8 @@ var gameBoard = [
   0,4,4,4,4,4,4
 ];
 
+var highlighted;
+
 
 //Bea's edits for switch accessible
 
@@ -21,8 +23,6 @@ var currentPlayer = 'one';
 //game play readout
 var readOut = document.querySelector('div.info'); 
 
-
-// 
 function renderBoard() {
   var gameContainer = document.querySelector('.container'); // render the container
   for(var i = 0; i < gameBoard.length; i++){ // go through the length of the game board
@@ -55,26 +55,37 @@ function renderBoard() {
 // it still goes into the bank of the opponent no matter what
 
 function moveStones(pitIndex){ // moving at a certain pit
+  console.log("pit index is " + pitIndex);
   var stonesInHand = gameBoard[pitIndex]; // the stones you have is the amount in the pit you pick up
   var pitNextIndex = pitIndex + 1; // finds next index 
   gameBoard[pitIndex] = 0; // setting the stones you have to 0, because you're picking all of them up
   var i;
   if(stonesInHand > 0) { // if you click on a full pit
-    console.log(currentPlayer + "Yo");
 
     for(i = pitNextIndex; i < stonesInHand + pitNextIndex; i++){ // for each 
-      
       // starts at the next index, makes sure you use all stones, increments
       lastIndex = i % gameBoard.length; // last index  that something will be dropped (when everything is out!)
       // founds the index it would be dropped at
-
-      gameBoard[lastIndex] += 1; // 
+      gameBoard[lastIndex] += 1; //
+      
+      
     }
   };
 
+
   bankStones(lastIndex); //send the index
-  setPlayer(); // set the player, switch the player
+
+  if ((currentPlayer == 'one' && lastIndex != 0) || currentPlayer == 'two' && lastIndex != 7) {
+    setPlayer();
+  } else { // don't change if they're in a bank
+    readOut.textContent = 'It is player '+currentPlayer+'\'s turn';
+  }
+  
 };
+
+// function player2Turn (pitIndex) { // where to get the pit
+
+// }
 
 function bankStones(lastIndex){   // takes in index  
   var inverse = gameBoard.length - lastIndex;  // inverse is the index ACROSS from it 
@@ -129,18 +140,83 @@ function setPlayer(){ // set the player
   if(currentPlayer === 'one'){ // switch the string holding the current player
     currentPlayer = 'two';
     readOut.textContent = 'It is player '+currentPlayer+'\'s turn'; // text to print
+    // go to AI function
+
     return currentPlayer;  
   } else {
     currentPlayer = 'one'; 
     readOut.textContent = 'It is player '+currentPlayer+'\'s turn';
+    
     return currentPlayer;
   };
 
 };
 
-var setListeners = function(){  
-  for(var i = 0; i < gameBoard.length; i++){ 
-    var pit = document.querySelectorAll('button'); // select all the stones
+
+function moveStones2(e) { // when key is pressed,, call this
+
+  console.log("hi");
+  // check to see which keys
+ var keyCode = e.keyCode;
+  if (keyCode == 13) { // CONFIRM SELECTION
+    moveStones(highlighted);
+    // call moveStones
+    // get current value of the index
+    // how to get the current number we're in?
+    // send current value of the pitIndex somehow
+  } else if (keyCode == 32) { // go through options
+    
+
+   
+    var prevHighlighted = highlighted; // keep in here
+
+    console.log("at the start, highlighted is " + highlighted);
+
+    if (highlighted + 1 != 7 && highlighted + 1 <= 13) { // if its within the bounds to be selected
+      highlighted ++; // if its in the bounds go ahead and increase it
+    } else {
+      if (highlighted + 1 == 7) {
+        highlighted = 8
+      } else if (highlighted + 1 >= 13) {
+        highlighted = 1;
+      }
+    }
+
+    // need to increment the variable that you currently are on
+    var prevSpot = document.getElementById(prevHighlighted);
+    var selectedSpot  = document.getElementById(highlighted);
+
+
+    prevSpot.style.backgroundColor = "#DEB887"; // oG color
+    prevSpot.style.border = "#8B7355";
+
+    selectedSpot.style.backgroundColor = "#abebb4"; // oG color
+    selectedSpot.style.border = "#aaa9ad";
+    
+
+
+   
+  }
+}
+
+var setListeners = function(){   // only sets at the beginning
+  // 
+  document.addEventListener("keydown", moveStones2, false);
+
+ 
+
+
+  for(var i = 0; i < gameBoard.length; i++){  //setting a listener for each pit
+    var pit = document.querySelectorAll('button'); // select all the stones to be listening for a click
+
+    pit[1].style.backgroundColor =  "#abebb4";
+    pit[1].style.border =  "#aaa9ad";
+    highlighted = 1;
+    
+  
+    // pit[i].addEventListener('keydown', funct)
+   
+
     pit[i].addEventListener('click', function(eventObject){moveStones(Number(eventObject.target.id))} );
     // moves stones when te button 
     // moveStones
