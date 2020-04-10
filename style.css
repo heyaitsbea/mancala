@@ -17,6 +17,24 @@ p {
   font-size: 10pt;
 }
 
+#toggle {
+  width: 800px;
+  height: 100px;
+  background-color: white;
+  border: 2px lightgrey;
+  box-shadow: 2px 2px 20px 5px white inset;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#select {
+  width: 800px;
+  height: 100px;
+  background-color: white;
+  border: 2px lightgray;
+  box-shadow: 2px 2px 20px 5px white inset;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .container {
   width: 880px;
   margin: 0 auto;

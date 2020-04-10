@@ -50,11 +50,6 @@ function renderBoard() {
 };
 
 
-// pick stones up and drop one in each
-// if it lands on your bank (to the right, you go again)
-// if you move it to an empty space, you get what's in that space + the space across frmo you in your bank
-// it still goes into the bank of the opponent no matter what
-
 function moveStones(pitIndex) { // moving at a certain pit
 
   var stonesInHand = gameBoard[pitIndex]; // the stones you have is the amount in the pit you pick up
@@ -229,8 +224,8 @@ function bankStones(lastIndex) {   // takes in index
 
 var updateBoard = function () { // update the board
   for (var i = 0; i < gameBoard.length; i++) {
-    var pit = document.querySelectorAll('button');
-    pit[i].textContent = gameBoard[i];
+    var pit = document.getElementById(i);
+    pit.textContent = gameBoard[i];
   };
 
   checkWin(); // check if one of the players won
@@ -334,21 +329,49 @@ function moveStones2(e) { // when key is pressed,, call this
   }
 }
 
+var toggleOptions = function (index) {
+  if (currentPlayer == 'one') {
+    var prevHighlighted = highlighted; 
+    if (highlighted + 1 <= 13) {
+      highlighted++;
+    } else {
+      if (highlighted + 1 == 14) {
+        highlighted = 8
+      }
+    }
+    var prevSpot = document.getElementById(prevHighlighted);
+    var selectedSpot = document.getElementById(highlighted);
+    prevSpot.style.backgroundColor = "#DEB887"; // oG color
+    prevSpot.style.border = "#8B7355";
+
+    selectedSpot.style.backgroundColor = "#abebb4";
+    selectedSpot.style.border = "#aaa9ad";
+  }
+
+
+document.getElementById("select").style.backgroundColor = "white"
+document.getElementById("toggle").style.backgroundColor = "#bce3eb"
+
+ 
+}
+
+var selectOption = function () {
+  console.log("yo");
+  document.getElementById("toggle").style.backgroundColor = "white"
+  document.getElementById("select").style.backgroundColor = "#bce3eb"
+  moveStones(highlighted);
+}
+
 var setListeners = function () {   // only sets at the beginning
-  // 
   document.addEventListener("keydown", moveStones2, false);
-
-  for (var i = 0; i < gameBoard.length; i++) {  //setting a listener for each pit
-    var pit = document.querySelectorAll('button'); // select all the stones to be listening for a click
-
-    pit[8].style.backgroundColor = "#abebb4";
-    pit[8].style.border = "#aaa9ad";
+    document.getElementById('8').style.backgroundColor = "#abebb4";
+    document.getElementById('8').style.border = "#aaa9ad";
     highlighted = 8;
+    
+    document.getElementById("toggle").addEventListener('click', function (eventObject) {toggleOptions(highlighted)})
 
-    pit[i].addEventListener('click', function (eventObject) { moveStones(Number(eventObject.target.id)) });
-    // moves stones when te button 
-    // moveStones
-  };
+    document.getElementById("select").addEventListener('click', function (eventObject) {selectOption ()})
+
 };
 
 renderBoard();
