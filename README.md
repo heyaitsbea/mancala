@@ -1,1 +1,1 @@
-### [Mancala](http://heyaitsbea.github.io/Mancala/)
+### [Mancala](http://heyaitsbea.github.io/mancala/)
