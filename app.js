@@ -296,8 +296,12 @@ function setPlayer() { // set the player
 
 
 function moveStones2(e) { // when key is pressed,, call this
+  if  (e.repeat) {
+    return;
+  }
   // check to see which keys
   var keyCode = e.keyCode;
+  
   if (keyCode == 13 && currentPlayer == 'one') { // CONFIRM SELECTION
     moveStones(highlighted);
     // call moveStones
