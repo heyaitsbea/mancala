@@ -46,26 +46,39 @@ function renderBoard() {
   playerClass[0].setAttribute('class', 'playerTwo');
   playerClass[1].setAttribute('class', 'playerOne');
 
+ 
   setListeners();
 };
 
 
 function moveStones(pitIndex) { // moving at a certain pit
 
-  var stonesInHand = gameBoard[pitIndex]; // the stones you have is the amount in the pit you pick up
+  var stonesInHand = this.gameBoard[pitIndex]; // the stones you have is the amount in the pit you pick up
   var pitNextIndex = pitIndex + 1; // finds next index 
-  gameBoard[pitIndex] = 0; // setting the stones you have to 0, because you're picking all of them up
+  this.gameBoard[pitIndex] = 0; // setting the stones you have to 0, because you're picking all of them up
   var i;
+  var tempIndex;
   if (stonesInHand > 0) { // if you click on a full pit
 
-    for (i = pitNextIndex; i < stonesInHand + pitNextIndex; i++) { // for each 
-      // starts at the next index, makes sure you use all stones, increments
-      lastIndex = i % gameBoard.length; // last index  that something will be dropped (when everything is out!)
-      // founds the index it would be dropped at
 
+    var goUntil = stonesInHand + pitNextIndex;
+    for (i = pitNextIndex; i < goUntil; i++) { // for each 
+      // starts at the next index, makes sure you use all stones, increments
+      lastIndex = i % this.gameBoard.length; // last index  that something will be dropped (when everything is out!)
+      // founds the index it would be dropped at
+      
       // supposed to skip the opponent's bank
       if ((currentPlayer == "one" && lastIndex != 7) || (currentPlayer == "two" && lastIndex != 0)) {
-        gameBoard[lastIndex] += 1; //
+        this.gameBoard[lastIndex] += 1; //
+      } else {
+      // if it lands on an opponents bank
+     
+         lastIndex = lastIndex + 1; 
+        goUntil = goUntil + 1;
+          
+          // console.log("now i is " + i);
+         
+        // tempIndex = lastIndex;
       }
 
     }
@@ -77,11 +90,12 @@ function moveStones(pitIndex) { // moving at a certain pit
     document.getElementById(highlighted).style.backgroundColor = "#DEB887"
     document.getElementById(highlighted).style.border = "#8B7355"
 
+
     setPlayer(); // next player's turn!
   } else { // don't change if they're in a bank
     readOut.textContent = 'It is still player ' + currentPlayer + '\'s turn!';
     if (currentPlayer == 'one') {
-
+   
 
       document.getElementById(highlighted).style.backgroundColor = "#DEB887"
       document.getElementById(highlighted).style.border = "#8B7355"
@@ -115,6 +129,7 @@ function player2Turn(pitIndex) { // where to get the pit
       tempGameBoard[j] = this.gameBoard[j];
     }
 
+    
 
     var stonesInHand = tempGameBoard[i]; // check with these amounts
 
@@ -173,7 +188,10 @@ function player2Turn(pitIndex) { // where to get the pit
 
 
 
+
   var selectBtn = document.getElementById(maxGainIndex); // where are you gonna make the move?
+ 
+
   highlighted = maxGainIndex;
   var delayInMilliseconds = 3000; // 3 seconds
 
@@ -183,10 +201,12 @@ function player2Turn(pitIndex) { // where to get the pit
 
     }, delayInMilliseconds)
 
-    selectBtn.style.backgroundColor = "#f56e5f"
+    selectBtn.style.backgroundColor = "#f56e5f";
     selectBtn.style.border = "#aaa9ad";
-    document.getElementById("1").style.backgroundColor = "#DEB887";
-    document.getElementById("1").style.border = "#8B7355"
+
+
+    // document.getElementById("1").style.backgroundColor = "#DEB887";
+    // document.getElementById("1").style.border = "#8B7355"
 
 
   }, delayInMilliseconds);
@@ -200,56 +220,73 @@ function player2Turn(pitIndex) { // where to get the pit
 };
 
 function bankStones(lastIndex) {   // takes in index  
+  
   var inverse = gameBoard.length - lastIndex;  // inverse is the index ACROSS from it 
   //if lastIndex is not a bank and has one stone
-  if ((lastIndex != 0) && (lastIndex != 7) && (gameBoard[lastIndex] === 1)) { // if there's only 1 in the last one AND is not a bank
+
+
+  if ((lastIndex != 0) && (lastIndex != 7) && (this.gameBoard[lastIndex] === 1)) { // if there's only 1 in the last one AND is not a bank
     if (currentPlayer === 'two') {   // if it's the opponent's turn
       if (1 <= lastIndex <= 6) {
         //move all stones in inverse pit to player 2 bank
-        gameBoard[7] = gameBoard[7] + gameBoard[inverse] + 1;
-        gameBoard[lastIndex] = 0; // clears out both
-        gameBoard[inverse] = 0;
+       
+        this.gameBoard[7] = this.gameBoard[7] + this.gameBoard[inverse] + 1;
+        this.gameBoard[lastIndex] = 0; // clears out both
+        this.gameBoard[inverse] = 0;
+        
       };
     } else { // if it is Your turn
       if (8 <= lastIndex <= 13) {
-        gameBoard[0] = gameBoard[0] + gameBoard[inverse] + 1;
-        gameBoard[lastIndex] = 0;
-        gameBoard[inverse] = 0;
+       
+        this.gameBoard[0] = this.gameBoard[0] + this.gameBoard[inverse] + 1;
+        this.gameBoard[lastIndex] = 0;
+        this.gameBoard[inverse] = 0;
       };
     };
   };
+
 
   updateBoard();
 };
 
 var updateBoard = function () { // update the board
+ 
+
+  console.log("Updating the board");
   for (var i = 0; i < gameBoard.length; i++) {
     var pit = document.getElementById(i);
     pit.textContent = gameBoard[i];
+    
   };
+  console.log(this.gameBoard);
+  console.log ("PLAYER 1 : " + this.gameBoard[0]);
+  console.log ("PLAYER 2 : " + this.gameBoard[7]);
+
+
+  
 
   checkWin(); // check if one of the players won
 };
 
 // winning = using up all the stones on your side
 function checkWin() {  // see if someone won
-   console.log("Check for winner");
+ 
 
-  var playerOneStones = gameBoard[1] + gameBoard[2] + gameBoard[3] + gameBoard[4] + gameBoard[5] + gameBoard[6];
-  var playerTwoStones = gameBoard[8] + gameBoard[9] + gameBoard[10] + gameBoard[11] + gameBoard[12] + gameBoard[13];
-  console.log(playerOneStones);
-  console.log(playerTwoStones);
+  var playerOneStones = this.gameBoard[1] + this.gameBoard[2] + this.gameBoard[3] + this.gameBoard[4] + this.gameBoard[5] + this.gameBoard[6];
+  var playerTwoStones = this.gameBoard[8] + this.gameBoard[9] + this.gameBoard[10] + this.gameBoard[11] + this.gameBoard[12] + this.gameBoard[13];
+  
 
-  if (playerOneStones === 0 || playerTwoStones === 0) {
-    var playerOneTotal = playerOneStones + gameBoard[0];
-    var playerTwoTotal = playerTwoStones + gameBoard[7];
+  if (playerOneStones === 0 || playerTwoStones === 0) { // this ends the game
+    var playerOneTotal = this.gameBoard[0];
+    var playerTwoTotal =  this.gameBoard[7];
 
     if (playerOneTotal > playerTwoTotal) {
-      alert('Player One Wins!');
+      alert('With this move, player one wins! THE SCORE IS ' + playerOneTotal + " vs " + playerTwoTotal);
+    
       readOut.textContent = 'Player One Wins!';
       window.location.href = window.location.href;
     } else {
-      alert(readOut.textContent = 'Player Two Wins!');
+      alert('With this move, player two wins! THE SCORE IS ' + playerOneTotal + " vs " + playerTwoTotal);
       readOut.textContent = 'Player Two Wins!';
       window.location.href = window.location.href;
   ;
@@ -260,6 +297,7 @@ function checkWin() {  // see if someone won
 
 //set current player
 function setPlayer() { // set the player
+  
   if (currentPlayer === 'one') { // switch the string holding the current player
     highlighted = 1;
     currentPlayer = 'two';
@@ -299,6 +337,8 @@ function moveStones2(e) { // when key is pressed,, call this
   if  (e.repeat) {
     return;
   }
+
+
   // check to see which keys
   var keyCode = e.keyCode;
   
@@ -360,7 +400,8 @@ document.getElementById("toggle").style.backgroundColor = "#bce3eb"
 }
 
 var selectOption = function () {
-  console.log("yo");
+ 
+ 
   document.getElementById("toggle").style.backgroundColor = "white"
   document.getElementById("select").style.backgroundColor = "#bce3eb"
   moveStones(highlighted);
