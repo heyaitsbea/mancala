@@ -6,7 +6,7 @@ body {
 }
 
 h1 {
-  font-size: 50pt;
+  font-size: 40pt;
 }
 
 div {
@@ -74,7 +74,7 @@ button.pit7 {
 
 .info {
   width: 880px;
-  height: 100px;
+  height: 70px;
   margin: 20px auto;
   line-height: 100px;
   text-align: center;

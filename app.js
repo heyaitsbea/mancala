@@ -313,6 +313,10 @@ function setPlayer() { // set the player
 function moveStones2(e) { // when key is pressed,, call this
   if (e.repeat) {
     return;
+  }  
+
+  if(e.keyCode == 32 && e.target == document.body) {
+    e.preventDefault();
   }
 
 
