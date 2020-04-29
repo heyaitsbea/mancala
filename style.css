@@ -3,6 +3,7 @@ body {
   font-size: 20pt;
   color: #5F9EA0;
   text-align: center;
+  zoom: 75%
 }
 
 h1 {
@@ -14,7 +15,8 @@ div {
 }
 
 p {
-  font-size: 10pt;
+  font-size: 13pt;
+
 }
 
 #toggle {
